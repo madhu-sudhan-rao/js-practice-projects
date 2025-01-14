@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Todo List</h1>
+        <form id="new-task-form">
+          <input
+            type="text"
+            id="new-task-input"
+            placeholder="What do you have planned?"
+          />
+          <button id="new-task-submit" onclick="addTask(event)">Add</button>
+        </form>
+      </div>
+      <div id="tasks">
+        <div class="pending-tab tab" id="pending">
+          <div class="title" id="pending-title">Pending</div>
+          <div id="pending-tasks">
+            <div class="task no-tasks-text" id="no-pending-tasks">No tasks to do.</div>
+          </div>
+        </div>
+        <div class="completed tab" id="completed">
+          <div class="title" id="completed-title">Completed</div>
+          <div id="completed-tasks">
+            <div class="task no-tasks-text" id="no-completed-tasks">Great! You have completed all tasks.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

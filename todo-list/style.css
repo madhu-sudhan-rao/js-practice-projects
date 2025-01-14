@@ -1,0 +1,130 @@
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0%;
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  justify-content: center;
+}
+* {
+  font-family: "Roboto", sans-serif;
+}
+.container {
+  margin: 100px;
+  /* height: 100vh; */
+  height: max-content;
+  /* border: 1px solid black; */
+  width: 600px;
+  border-radius: 25px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 20px 20px;
+}
+
+.container .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header form input {
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+.header form button {
+  border: none;
+  background-color: #212121;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.header form button:hover {
+  background-color: #393939;
+}
+
+.container #tasks {
+  /* padding: 10px 20px;
+    border: 1px solid red; */
+}
+
+#tasks #pending {
+}
+#tasks .tab .title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.error,
+.empty-task-input-error {
+  color: red;
+}
+
+.task {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task .task-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.task .task-details .task-text {
+  font-size: large;
+  font-weight: 500;
+}
+
+.task .task-details .created-at {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgb(168, 168, 168);
+}
+
+.task .task-card-left-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task .task-card-left-box .task-checkbox-input input[type="checkbox"] {
+  /* height: 60px; */
+  border: 2px solid red;
+}
+
+.task .delete-button {
+  background-color: #dbdbdb;
+  border: none;
+  border-radius: 5px;
+  color: #202020;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+#no-pending-tasks,
+#no-completed-tasks {
+  font-weight: 500;
+  color: #909090;
+  font-size: small;
+}
