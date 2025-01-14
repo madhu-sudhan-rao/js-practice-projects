@@ -207,7 +207,7 @@ function fetchTasks() {
             changeStatus(task);
         })
     } else {
-        updateTasksCount()
+        updateTasksCount();
     }
 }
 
@@ -259,10 +259,11 @@ function createSortElement(type) {
     const sortElement = document.createElement('span')
     sortElement.classList.add('material-symbols-outlined');
     sortElement.textContent = 'swap_vert';
+    sortElement.style.cursor = 'pointer';
 
     sortElement.addEventListener("click", () => {
         if (type === 'pending') {
-            pendingTasks.sort((a, b) => sortOrderPendingAscend ? a.createdAt = b.createdAt : b.createdAt - a.createdAt)
+            pendingTasks.sort((a, b) => sortOrderPendingAscend ? a.createdAt - b.createdAt : b.createdAt - a.createdAt)
             sortOrderPendingAscend = !sortOrderPendingAscend
             updateDisplay(pendingTasksList, pendingTasks)
 
