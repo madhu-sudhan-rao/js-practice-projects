@@ -64,6 +64,8 @@ body {
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .error,
