@@ -1,43 +1,58 @@
 
-// let tasks = [];f
 let pendingTasks = [];
 let completedTasks = [];
 const pendingTasksList = document.getElementById('pending-tasks');
 const completedTasksList = document.getElementById('completed-tasks');
 
 document.addEventListener('DOMContentLoaded', fetchTasks);
+initializeDragAndDrop([pendingTasksList, completedTasksList]);
 
 // Initialize drag-and-drop functionality for task lists
-[pendingTasksList, completedTasksList].forEach(list => {
-    list.addEventListener('dragover', (event) => {
-        event.preventDefault();
-        list.classList.add('dragover');
-    })
+// [pendingTasksList, completedTasksList].forEach(list => {
+//     list.addEventListener('dragover', (event) => {
+//         event.preventDefault();
+//         list.classList.add('dragover');
+//     })
 
-    list.addEventListener('dragleave', () => {
-        list.classList.remove('dragover')
-    })
+//     list.addEventListener('dragleave', () => {
+//         list.classList.remove('dragover')
+//     })
 
-    list.addEventListener('drop', handleDrop)
+//     list.addEventListener('drop', handleDrop)
 
-})
+// })
+
+function initializeDragAndDrop(lists) {
+    lists.forEach(list => {
+        list.addEventListener('dragover', handleDragOver);
+        list.addEventListener('dragleave', handleDragLeave);
+        list.addEventListener('drop', handleDrop);
+    });
+}
+
+function handleDragOver(event) {
+    event.preventDefault();
+    event.currentTarget.classList.add('dragover');
+}
+
+function handleDragLeave(event) {
+    event.currentTarget.classList.remove('dragover');
+}
+
+function findTaskById(taskId) {
+    return [...pendingTasks, ...completedTasks].find(t => t.createdAt == taskId);
+}
 
 function handleDrop(event) {
     event.preventDefault();
     const list = event.currentTarget
-    console.log('list: ', list);
     list.classList.remove('dragover')
-    console.log('list: ', list);
 
     const taskId = event.dataTransfer.getData('text/plain');
     const draggedTask = document.getElementById(taskId);
-    const isCompleted = list.id === 'completed-tasks';
-
-    const task = [...pendingTasks, ...completedTasks].find(t => t.createdAt == taskId);
-    console.log('task: ', task);
+    const task = findTaskById(taskId);
 
     if (task) {
-        // updateTaskStatus(task, isCompleted)
         if(task.isCompleted) {
             pendingTasks.push({...task, isCompleted: false})
             completedTasks = completedTasks.filter(t => t.createdAt !== task.createdAt)
@@ -53,7 +68,6 @@ function handleDrop(event) {
         
         updateCheckboxState(draggedTask, task.isCompleted)
         updateTasksCount()
-        // list.appendChild(draggedTask);
         task.isCompleted ? completedTasksList.append(draggedTask) : pendingTasksList.append(draggedTask)
         updateTasksCount()
         console.table('Pending List', pendingTasks);
@@ -65,8 +79,7 @@ function handleDrop(event) {
 }
 
 // Update the task's completion status
-function updateTaskStatus(task, isCompleted) {
-    console.log('task: ', task);
+function updateTaskStatus(task) {
     // task.isCompleted = isCompleted;
     if (task.isCompleted) {
         task.isCompleted = !task.isCompleted
@@ -153,7 +166,7 @@ function createTaskElement(task) {
     taskCheckbox.checked = task.isCompleted
 
     taskCheckbox.addEventListener("change", () => {
-        updateTaskStatus(task, !task.isCompleted)
+        updateTaskStatus(task)
         changeStatus(task);
         taskElement.remove();
     });
@@ -228,7 +241,6 @@ function saveTasks() {
 
 function fetchTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks'))
-    console.log('tasks: ', tasks);
     if (tasks?.length > 0) {
         tasks?.forEach(task => {
             if (task.isCompleted) {
@@ -374,9 +386,8 @@ function addToPendingTasks(task) {
 
     if (!alreadyExists) {
         pendingTasks.push(task);
-        console.log('pendingTasks Length: ', pendingTasks.length);
         updateTaskCountDisplay('pending', pendingTasks.length);
-        // completedTasks.sort((a, b) => b.createdAt - a.createdAt)
+        completedTasks.sort((a, b) => b.createdAt - a.createdAt)
         saveTasks()
     }
 
@@ -397,12 +408,8 @@ function addToCompletedTasks(task) {
     })
 
     if (!alreadyExists) {
-
-
         completedTasks.push(task);
-        console.log('completedTasks: ', completedTasks);
-
-        // completedTasks.sort((a, b) => b.createdAt - a.createdAt)
+        completedTasks.sort((a, b) => b.createdAt - a.createdAt)
         saveTasks()
     }
 
@@ -410,6 +417,5 @@ function addToCompletedTasks(task) {
 
 function removeTaskFromCompletedTasksList(task) {
     completedTasks = completedTasks.filter(t => t.createdAt !== task.createdAt)
-    console.log('completedTasks: ', completedTasks);
     saveTasks()
 }
