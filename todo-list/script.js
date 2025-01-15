@@ -1,5 +1,5 @@
 
-let tasks = [];
+// let tasks = [];f
 let pendingTasks = [];
 let completedTasks = [];
 const pendingTasksList = document.getElementById('pending-tasks');
@@ -25,30 +25,60 @@ document.addEventListener('DOMContentLoaded', fetchTasks);
 function handleDrop(event) {
     event.preventDefault();
     const list = event.currentTarget
+    console.log('list: ', list);
     list.classList.remove('dragover')
+    console.log('list: ', list);
 
     const taskId = event.dataTransfer.getData('text/plain');
     const draggedTask = document.getElementById(taskId);
     const isCompleted = list.id === 'completed-tasks';
 
-    const task = [...pendingTasks, ...completedTasks].find(t => t.createdAt == taskId)
+    const task = [...pendingTasks, ...completedTasks].find(t => t.createdAt == taskId);
+    console.log('task: ', task);
+
     if (task) {
-        updateTaskStatus(task, isCompleted)
-        updateCheckboxState(draggedTask, isCompleted)
+        // updateTaskStatus(task, isCompleted)
+        if(task.isCompleted) {
+            pendingTasks.push({...task, isCompleted: false})
+            completedTasks = completedTasks.filter(t => t.createdAt !== task.createdAt)
+            saveTasks()
+            console.log('completedTasks: ', completedTasks);
+        } else {
+            completedTasks.push({...task, isCompleted: true});
+            pendingTasks = pendingTasks.filter(t => t.createdAt !== task.createdAt)
+            saveTasks()
+        }
+        task.isCompleted = !task.isCompleted
+
+        
+        updateCheckboxState(draggedTask, task.isCompleted)
         updateTasksCount()
-        list.appendChild(draggedTask);
+        // list.appendChild(draggedTask);
+        task.isCompleted ? completedTasksList.append(draggedTask) : pendingTasksList.append(draggedTask)
+        updateTasksCount()
+        console.table('Pending List', pendingTasks);
+        console.table('Completed List', completedTasks);
+
+        
+
     }
 }
 
 // Update the task's completion status
 function updateTaskStatus(task, isCompleted) {
-    task.isCompleted = isCompleted;
+    console.log('task: ', task);
+    // task.isCompleted = isCompleted;
     if (task.isCompleted) {
-        removeTaskFromPendingTasksList(task);
-        addToCompletedTasks(task)
-    } else {
-        removeTaskFromCompletedTasksList(task)
+        task.isCompleted = !task.isCompleted
+        console.log('task: ', task);
         addToPendingTasks(task)
+        removeTaskFromCompletedTasksList(task);
+        
+    } else {
+        console.log('task: ', task);
+        task.isCompleted = !task.isCompleted
+        addToCompletedTasks(task)
+        removeTaskFromPendingTasksList(task)
     }
 }
 
@@ -128,6 +158,8 @@ function createTaskElement(task) {
         taskElement.remove();
     });
 
+ 
+
     taskCheckboxDiv.appendChild(taskCheckbox)
 
     const taskValueDiv = document.createElement('div');
@@ -191,24 +223,26 @@ function removeError() {
 function saveTasks() {
     const allTasks = [...pendingTasks, ...completedTasks]
     localStorage.setItem('tasks', JSON.stringify(allTasks));
+    updateTasksCount()
 }
 
 function fetchTasks() {
-    tasks = JSON.parse(localStorage.getItem('tasks'))
+    const tasks = JSON.parse(localStorage.getItem('tasks'))
+    console.log('tasks: ', tasks);
     if (tasks?.length > 0) {
         tasks?.forEach(task => {
             if (task.isCompleted) {
-                // completedTasks.unshift(task)
                 addToCompletedTasks(task)
             } else {
-                // pendingTasks.unshift(task)
                 addToPendingTasks(task)
             }
             changeStatus(task);
         })
+    
     } else {
         updateTasksCount();
     }
+
 }
 
 function removeTask(task) {
@@ -231,13 +265,15 @@ function changeStatus(task) {
 }
 
 function updateTasksCount() {
-    updateTaskCountDisplay('pending', pendingTasks?.length || 0);
-    updateTaskCountDisplay('completed', completedTasks?.length || 0)
+    updateTaskCountDisplay('pending', pendingTasks.length);
+    updateTaskCountDisplay('completed', completedTasks.length)
 
-    toggleNoTasksMessage('pending', pendingTasks?.length || 0);
-    toggleNoTasksMessage('completed', completedTasks?.length || 0)
+    toggleNoTasksMessage('pending', pendingTasks.length);
+    toggleNoTasksMessage('completed', completedTasks.length)
 
 }
+
+
 
 function updateTaskCountDisplay(type, count) {
     const titleElement = document.getElementById(`${type}-title`);
@@ -263,35 +299,86 @@ function createSortElement(type) {
 
     sortElement.addEventListener("click", () => {
         if (type === 'pending') {
-            pendingTasks.sort((a, b) => sortOrderPendingAscend ? a.createdAt - b.createdAt : b.createdAt - a.createdAt)
+            pendingTasks = pendingTasks.sort((a, b) => sortOrderPendingAscend ? a.createdAt - b.createdAt : b.createdAt - a.createdAt)
             sortOrderPendingAscend = !sortOrderPendingAscend
-            updateDisplay(pendingTasksList, pendingTasks)
+            // saveTasks()
+            // fetchTasks()
+
+            updateDisplay(type, pendingTasksList, pendingTasks)
+
 
         }
         if (type === 'completed') {
-            completedTasks.sort((a, b) => sortOrderCompletedAscend ? a.createdAt - b.createdAt : b.createdAt - a.createdAt);
+            completedTasks = completedTasks.sort((a, b) => sortOrderCompletedAscend ? a.createdAt - b.createdAt : b.createdAt - a.createdAt);
             sortOrderCompletedAscend = !sortOrderCompletedAscend; // Flip order for next click
-            updateDisplay(completedTasksList, completedTasks)
+            // saveTasks()
+            // fetchTasks()
+            updateDisplay(type, completedTasksList, completedTasks)
         }
     })
+
+
 
     return sortElement
 }
 
-function updateDisplay(list, tasksArray) {
-    list.innerHTML = '';
+function createNoPendingTasksDiv(type) {
+    const element = document.createElement('div')
+    element.classList.add('task', 'no-tasks-text'); // Add each class separately
+    element.id = `no-${type}-tasks`;
+    element.textContent = type === 'pending' ? 'No tasks to do.' : 'Great! You have completed all tasks.'
 
+    return element
+    
+}
+
+function updateDisplay(type,list, tasksArray) {
+    list.innerHTML = '';
+    console.log('list: ', list);
+
+    const noTasksElement = createNoPendingTasksDiv(type);
+    
+    list.appendChild(noTasksElement)
     tasksArray.forEach(task => {
         const newTaskElement = createTaskElement(task);
         list.appendChild(newTaskElement);
     });
+
+    updateTasksCount()
+
+
+    // fetchTasks()
+    
+    [pendingTasksList, completedTasksList].forEach(list => {
+        list.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            list.classList.add('dragover');
+        })
+    
+        list.addEventListener('dragleave', () => {
+            list.classList.remove('dragover')
+        })
+    
+        list.addEventListener('drop', handleDrop)
+    
+    })
 }
 
 function addToPendingTasks(task) {
-    pendingTasks.push(task);
+    let alreadyExists = false;
+    pendingTasks.forEach(t => {
+        if (t.value === task.value) {
+            alreadyExists = true
+        }
+    })
 
-    pendingTasks.sort((a, b) => b.createdAt - a.createdAt)
-    saveTasks()
+    if (!alreadyExists) {
+        pendingTasks.push(task);
+        console.log('pendingTasks Length: ', pendingTasks.length);
+        updateTaskCountDisplay('pending', pendingTasks.length);
+        // completedTasks.sort((a, b) => b.createdAt - a.createdAt)
+        saveTasks()
+    }
 
 }
 
@@ -302,14 +389,27 @@ function removeTaskFromPendingTasksList(task) {
 
 function addToCompletedTasks(task) {
 
-    completedTasks.push(task);
+    let alreadyExists = false;
+    completedTasks.forEach(t => {
+        if (t.createdAt === task.createdAt) {
+            alreadyExists = true
+        }
+    })
 
-    completedTasks.sort((a, b) => b.createdAt - a.createdAt)
-    saveTasks()
+    if (!alreadyExists) {
+
+
+        completedTasks.push(task);
+        console.log('completedTasks: ', completedTasks);
+
+        // completedTasks.sort((a, b) => b.createdAt - a.createdAt)
+        saveTasks()
+    }
 
 }
 
 function removeTaskFromCompletedTasksList(task) {
     completedTasks = completedTasks.filter(t => t.createdAt !== task.createdAt)
+    console.log('completedTasks: ', completedTasks);
     saveTasks()
 }
