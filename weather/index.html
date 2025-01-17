@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=swap_vert"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />    
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="title">Weather</div>
+      </header>
+      <main>
+        <section class="location-search-form">
+          <div class="location-input input-field">
+            <div class="search-icon">
+              <span class="material-symbols-outlined">search</span>
+            </div>
+            <input
+              type="text"
+              name=""
+              placeholder="Location"
+              id="location-input"
+              autocomplete="false"
+              autofocus
+            />
+            <div class="location-auto-complete-suggestions-list-wrapper" id="auto-complete-wrapper" style="display: none; position: absolute; z-index: 4;"></div>
+          </div>
+        </section>
+        <section class="weather-data-section" id="weather-data-section">
+          <div class="weather-card">
+            <main class="card-body">
+              <section class="location-temperature-details">
+                <div class="location-date-time-block">
+                  <div class="location-name" id="location-name"></div>
+                  <div class="date" id="date"></div>
+                  <div class="weather-type" id="weather-type"></div>
+                </div>
+                <div class="temperature-block">
+                  <div class="current-temperature" id="current-temperature"></div>
+                  <div class="min-max-temperatures">
+                    <div class="min-temperature">
+                      Min: <span class="min-temp" id="min-temp"></span>
+                    </div>
+                    <div class="line-separator"></div>
+                    <div class="max-temperature">
+                      Max: <span class="max-temp" id="max-temp"></span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </main>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

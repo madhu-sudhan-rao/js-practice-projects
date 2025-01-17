@@ -1,0 +1,244 @@
+body {
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+  background: #0281c5;
+  object-fit: fill;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(1px);
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+  cursor: default;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+
+header {
+  padding: 20px;
+}
+
+header .title {
+  font-size: 40px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+main {
+}
+
+main .location-search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main .location-search-form .location-input.input-field {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  width: 300px;
+  position: relative;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+main .location-search-form .location-input.input-field input[type="text"],
+main
+  .location-search-form
+  .location-input.input-field
+  input[type="text"]:focus {
+  outline: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  background: none;
+  width: -webkit-fill-available;
+  cursor: text;
+}
+
+main .weather-data-section {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+main .weather-data-section .weather-card {
+  margin-top: 30px;
+  border: 1px solid black;
+  padding: 30px;
+  width: 600px;
+  display: flex;
+  object-fit: fill;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.weather-card .card-body .location-temperature-details {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.weather-card .card-body .location-date-time-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.location-name {
+  font-size: 35px;
+  color: #fff;
+}
+
+.date {
+  color: #fff;
+}
+
+.weather-type {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 30px;
+}
+
+.card-body .temperature-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-temperature {
+  font-size: 60px;
+  color: #fff;
+}
+
+.min-max-temperatures {
+  display: flex;
+  gap: 5px;
+}
+
+.line-separator {
+  border: 1px solid rgba(255, 255, 255, 0.404);
+}
+
+.horizontal-separator {
+  border: 1px solid rgba(255, 255, 255, 0.122);
+}
+
+.min-temperature,
+.max-temperature {
+  color: white;
+  font-weight: 500;
+}
+
+.min-temp {
+  color: #e7f375;
+}
+
+.max-temp {
+  color: #ff2222;
+}
+
+.forecast-section .title {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 500;
+}
+
+.forecast-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.forecast-cards {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.forecast-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 5px;
+  border-radius: 7px;
+  background-color: #0e8ed3;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: #ffffffcf;
+  cursor: default;
+}
+
+.forecast-card .temp {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.location-auto-complete-suggestions-list-wrapper {
+  top: 50px;
+  left: 0;
+  width: 93.8%;
+  padding: 10px;
+  border-radius: 0px 0px 10px 10px;
+  background: white;
+  max-height: 150px;
+  overflow-y: auto;
+  scrollbar-width: 3px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.location-auto-complete-suggestions-list-wrapper.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.location-suggestion-item {
+  background: white;
+  color: black;
+  font-weight: 500;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.location-suggestion-item:hover {
+  background-color: #f1f6f8;
+  cursor: pointer;
+  transform: scale(1.02);
+}
