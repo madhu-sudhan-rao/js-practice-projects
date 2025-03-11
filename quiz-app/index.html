@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <script src="./questions/css-questions.js" defer></script>
+    <script src="./questions/html-questions.js" defer></script>
+    <script src="./questions/js-questions.js" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="title">Quiz.u</div>
+    </header>
+    <main class="container">
+      <section class="call-to-action">
+        <p class="call-to-action__text">
+          Click on a Subject to Start Quizzing!
+        </p>
+      </section>
+
+      <section class="quiz-subjects">
+        <div class="quiz-subjects-list" id="quiz-subjects-list"></div>
+      </section>
+
+      <section class="quiz-container" id="quiz-container" style="display: none;">
+        <section class="quiz-question">
+          <div class="quiz-question-text">
+            Q 1: What does CSS stand for?
+          </div>
+          <div class="quiz-question-choices">
+            <div class="quiz-question-choice">
+              <label>
+                <input
+                  type="radio"
+                  name="question1"
+                  value="A"
+                  class="quiz-question__input"
+                />
+                Creative Style Sheets
+              </label>
+            </div>
+            <div class="quiz-question-choice">
+              <label>
+                <input
+                  type="radio"
+                  name="question1"
+                  value="B"
+                  class="quiz-question__input"
+                />
+                Cascading Style Sheets
+              </label>
+            </div>
+            <div class="quiz-question-choice">
+              <label>
+                <input
+                  type="radio"
+                  name="question1"
+                  value="C"
+                  class="quiz-question__input"
+                />
+                Colorful Style Sheets
+              </label>
+            </div>
+            <div class="quiz-question-choice">
+              <label>
+                <input
+                  type="radio"
+                  name="question1"
+                  value="D"
+                  class="quiz-question__input"
+                />
+                Computer Style Sheets
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="quiz-navigation">
+          <button class="quiz-navigation-button quiz-navigation-button--next">
+            Next Question
+          </button>
+          <button
+            class="quiz-navigation-button quiz-navigation-button--submit"
+          >
+            Submit Quiz
+          </button>
+        </section>
+
+        <section class="quiz-results" style="display: none">
+          <h2 class="quiz-results-title">Your Results</h2>
+          <p class="quiz-results-score">You scored X out of Y.</p>
+          <button class="quiz-results-button quiz-results-button--restart">
+            Restart Quiz
+          </button>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
