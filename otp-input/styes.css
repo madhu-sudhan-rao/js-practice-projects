@@ -1,0 +1,22 @@
+body {
+    background-color: black;
+}
+
+.otp-input {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.otp-input input {
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  width: 20px;
+  text-align: center;
+  background-color: black;
+  font-size: 16px;
+}
+
